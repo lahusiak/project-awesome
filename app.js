@@ -7,6 +7,11 @@ var employee = require("./server/employee");
 
 app.set('port', (process.env.PORT || 8000));
 
+app.get('/employee', function(req, res){
+    res.send(employee);
+    console.log("This is employee: ", employee);
+});
+
 app.get('/*', function (request, response){
     var file = request.params[0] || "index.html";
     //response.write(getScrumPoint(1,9));
@@ -15,5 +20,7 @@ app.get('/*', function (request, response){
     //console.log("Employee: ", employee); when console log is here it does not appear
     response.sendFile(path.join(__dirname, "./public", file));
 });
+
+
 
 app.listen(app.get("port"));

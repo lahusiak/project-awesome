@@ -13,7 +13,7 @@ var logicEmployeeCount = 0;
 
 var totalWeeks = 0;
 
-var employeeArray = [employee1, employee2, employee3];
+var employeeArray = [];
 
 
 $(document).ready(function(){
@@ -24,9 +24,16 @@ $(document).ready(function(){
         console.log("This is employee1:" , employee1);
         addScrumAndSkillPoints(employee2);
         addScrumAndSkillPoints(employee3);
+
+        //getEmployee();
         //console.log("This is Employee Count: " + backendEmployeeCount);
         //console.log("This is Scrum points: " + backendScrumPoints);
 
+    });
+    $("#output").on("click", ".assign-employee", function(){
+        getEmployee();
+        //addEmployeeToArray();
+        console.log("I got the data!");
     });
 
 });
@@ -34,6 +41,7 @@ $(document).ready(function(){
 function appendDom(){
     //console.log("I'm working!");
     $('#output').append("<h1>" + companyArray[0] + "<h1>");
+    $('#output').children().last().append("<button class = 'assign-employee'>Assign Staff</button>");
     $('#frontend').children().last().append(frontendValue);
     $('#backend').children().last().append(backendValue);
     $('#logic').children().last().append(logicValue);
@@ -44,6 +52,21 @@ function randomNumber(min, max){
 }
 
 
+function getEmployee(){
+    $.ajax({
+        type: "GET",
+        url:"/employee",
+        success: function(employee){
+            employeeArray.push(employee);
+            console.log("This is employeeArray", employeeArray);
+            console.log("I got here", employee);
+        }
+    })
+}
+
+function addEmployeeToArray(employee){
+    employeeArray.push(employee);
+}
 
 function metCriteria() {
     if (frontendEmployeeCount > 0
